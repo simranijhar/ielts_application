@@ -21,8 +21,8 @@ class _TestTakerMenuState extends State<TestTakerMenu> {
           return snapshot.data == null ? Container(): ListView.builder(
               itemCount: snapshot.data.documents.length,
               itemBuilder: (context, index){
-            return TestModuleTile(testTitle: snapshot.data.documents[index].data['testTitle'],
-                testDescription: snapshot.data.documents[index].data['testDescription']);
+            return TestModuleTile(testTitle: snapshot.data.documents[index].data()['testTitle'],
+                testDescription: snapshot.data.documents[index].data()['testDescription']);
           });
         },
       ),
