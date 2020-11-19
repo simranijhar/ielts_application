@@ -17,11 +17,11 @@ class _AddTestQuestionsState extends State<AddTestQuestions> {
   final _formKey = GlobalKey<FormState>();
 
   bool _isLoading = false;
-  String testQuestion = "",
-      option1 = "",
-      option2 = "",
-      option3 = "",
-      option4 = "";
+  String testQuestion,
+      option1,
+      option2,
+      option3,
+      option4;
 
   createTestQuestion() {
     if (_formKey.currentState.validate()) {

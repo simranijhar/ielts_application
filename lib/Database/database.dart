@@ -23,6 +23,16 @@ class DatabaseServices {
   }
 
   getTest() async {
-    return FirebaseFirestore.instance.collection('Test').snapshots();
+    return FirebaseFirestore.instance
+        .collection('Test')
+        .snapshots();
+  }
+
+  getTestQuestion(String testID) async {
+    return FirebaseFirestore.instance
+        .collection('Test')
+        .doc(testID)
+        .collection('QNA')
+        .get();
   }
 }
