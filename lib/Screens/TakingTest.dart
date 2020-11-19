@@ -62,8 +62,6 @@ class _TakingTestState extends State<TakingTest> {
       correct = 0;
       incorrect = 0;
       total = questionSnapshot.docs.length;
-
-      print("$total this is total");
       setState(() {
 
       });
