@@ -33,7 +33,7 @@ class _TestTakerResultsState extends State<TestTakerResults> {
                   onTap: (){
                     Navigator.pop(context);
                   },
-                  child: greyButton(context: context, labelButton: "Go To Main Page", buttonWidth: MediaQuery.of(context).size.width/2))
+                  child: greyButton(context: context, labelButton: "Go To Main Screen", buttonWidth: MediaQuery.of(context).size.width/2))
           ],),
         ),
       )

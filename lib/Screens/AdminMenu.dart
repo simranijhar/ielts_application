@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:ielts_application/Screens/AdminOverallResult.dart';
+import 'package:ielts_application/Screens/TakingTest.dart';
+//mport 'package:ielts_application/Screens/TestTakerResults.dart';
 import 'package:ielts_application/Widgets/widget.dart';
 import 'package:ielts_application/Screens/CreateTestModule.dart';
 
@@ -34,8 +37,25 @@ class _AdminMenuState extends State<AdminMenu> {
                 ),
               ),
               SizedBox(
-                height: 350,
+                height: 50
               ),
+              GestureDetector(
+                onTap: (){
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AdminOverallResult(
+                    correctOption: correct,
+                    incorrectOption: incorrect,
+                    total: total,
+                  )
+                  ));
+                },
+                child: greyButton(
+                    context: context,
+                    labelButton: "Overall Result"
+                ),
+              ),
+              SizedBox(
+                height: 275,
+              )
             ],
           ),
         ),

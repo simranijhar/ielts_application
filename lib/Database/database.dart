@@ -22,11 +22,24 @@ class DatabaseServices {
     });
   }
 
+  Future<void> addResults(Map resultData, String testID) async {
+    await FirebaseFirestore.instance
+        .collection('Test')
+        .doc(testID)
+        .collection('Results')
+        .add(resultData)
+        .catchError((e) {
+       print(e.toString());
+    });
+  }
+
   getTest() async {
     return FirebaseFirestore.instance
         .collection('Test')
         .snapshots();
   }
+
+
 
   getTestQuestion(String testID) async {
     return FirebaseFirestore.instance

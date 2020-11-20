@@ -13,7 +13,7 @@ class _CreateTestModuleState extends State<CreateTestModule> {
   DatabaseServices databaseServices = new DatabaseServices();
 
   final _formKey = GlobalKey<FormState>();
-  String testID, testTitle, testDescription;
+  String testID, testTitle, testDescription, audioURL;
   bool _isLoading = false;
 
   createModuleFirebase() {
@@ -25,6 +25,7 @@ class _CreateTestModuleState extends State<CreateTestModule> {
 
       Map<String, String> testMap = {
         "testID": testID,
+        "audioURL" : audioURL,
         "testTitle": testTitle,
         "testDescription": testDescription
       };
@@ -61,6 +62,19 @@ class _CreateTestModuleState extends State<CreateTestModule> {
                   margin: EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
                     children: [
+                      TextFormField(
+                        validator: (value) =>
+                        value.isEmpty ? "Enter Audio URL" : null,
+                        decoration: InputDecoration(
+                          hintText: "Audio URL",
+                        ),
+                        onChanged: (value) {
+                          audioURL = value;
+                        },
+                      ),
+                      SizedBox(
+                        height: 6,
+                      ),
                       TextFormField(
                         validator: (value) =>
                             value.isEmpty ? "Enter Test Title" : null,

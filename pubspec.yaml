@@ -41,7 +41,8 @@ dev_dependencies:
   random_string: ^2.0.1
   google_sign_in: ^4.5.6
   audioplayers: ^0.17.0
-  file_picker: ^2.0.13
+  path: ^1.7.0
+  video_player: ^1.0.1
 
 
 # For information on the generic Dart part of this file, see the

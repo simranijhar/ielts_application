@@ -25,7 +25,8 @@ class _TestTakerMenuState extends State<TestTakerMenu> {
               itemBuilder: (context, index){
             return TestModuleTile(testTitle: snapshot.data.documents[index].data()['testTitle'],
                 testDescription: snapshot.data.documents[index].data()['testDescription'],
-            testID: snapshot.data.documents[index].data()['testID'],);
+            testID: snapshot.data.documents[index].data()['testID'],
+            audioURL: snapshot.data.documents[index].data()['audioURL'],);
           });
         },
       ),
@@ -59,14 +60,15 @@ class TestModuleTile extends StatelessWidget {
   final String testTitle;
   final String testDescription;
   final String testID;
+  final String audioURL;
 
-  TestModuleTile({@required this.testTitle, @required this.testDescription, @required this.testID});
+  TestModuleTile({@required this.testTitle, @required this.testDescription, @required this.testID, @required this.audioURL});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => TakingTest(testID)
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => TakingTest(testID, audioURL)
         ));
       },
       child: Container(

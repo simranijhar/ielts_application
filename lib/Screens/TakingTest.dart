@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ielts_application/Class/Questions.dart';
 import 'package:ielts_application/Database/database.dart';
@@ -5,11 +6,13 @@ import 'package:ielts_application/Screens/TestTakerResults.dart';
 import 'package:ielts_application/Widgets/TakingTestOptionTile.dart';
 import 'package:ielts_application/Widgets/widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 class TakingTest extends StatefulWidget {
 
   final String testID;
-  TakingTest(this.testID);
+  final String audioURL;
+  TakingTest(this.testID, this.audioURL);
 
   @override
   _TakingTestState createState() => _TakingTestState();
@@ -19,11 +22,13 @@ int total = 0;
 int correct = 0;
 int incorrect = 0;
 int notAttempted = 0;
+AudioPlayer audioPlayer = AudioPlayer();
 
 class _TakingTestState extends State<TakingTest> {
 
   DatabaseServices databaseServices = new DatabaseServices();
   QuerySnapshot questionSnapshot;
+  bool isLoading = true;
 
   Questions getQuestionFromDataSnapshot(
       DocumentSnapshot questionSnapshot){
@@ -55,18 +60,24 @@ class _TakingTestState extends State<TakingTest> {
 
   @override
   void initState() {
-    print("${widget.testID}");
+    print("${widget.testID}, audio: ${widget.audioURL}");
     databaseServices.getTestQuestion(widget.testID).then((value){
       questionSnapshot = value;
       notAttempted = 0;
       correct = 0;
       incorrect = 0;
+      isLoading = false;
       total = questionSnapshot.docs.length;
       setState(() {
-
       });
     });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    audioPlayer.stop();
+    super.dispose();
   }
 
   @override
@@ -77,27 +88,42 @@ class _TakingTestState extends State<TakingTest> {
         backgroundColor: Colors.transparent,
         elevation: 0.0,
       ),
-      body: Container(
-        child: Column(
-          children: [
-            questionSnapshot == null ?
-                Container(
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                ) :
-                ListView.builder(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  shrinkWrap: true,
-                    physics: ClampingScrollPhysics(),
-                    itemCount: questionSnapshot.docs.length,
-                    itemBuilder: (context, index){
-                      return TakingTestTile(
-                          questions: getQuestionFromDataSnapshot(questionSnapshot.docs[index]), index: index,
-                      );
-                    }
-                )
-          ],
+      body: isLoading ? Container(
+        child: Center(child: CircularProgressIndicator(),),
+      )
+      : SingleChildScrollView(
+        child: Container(
+          child: Column(
+            children: [
+              GestureDetector(
+                  onTap: (){
+                    audioPlayer.play("${widget.audioURL}");
+                  },
+                  child: greyButton(context: context, labelButton: "Play Audio", buttonWidth: MediaQuery.of(context).size.width / 2 -
+                      36),
+                ),
+              SizedBox(
+                height: 15,
+              ),
+              questionSnapshot == null ?
+                  Container(
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  )
+                  : ListView.builder(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    shrinkWrap: true,
+                      physics: ClampingScrollPhysics(),
+                      itemCount: questionSnapshot.docs.length,
+                      itemBuilder: (context, index){
+                        return TakingTestTile(
+                            questions: getQuestionFromDataSnapshot(questionSnapshot.docs[index]), index: index,
+                        );
+                      }
+                  )
+            ],
+          ),
         ),
       ),
 
