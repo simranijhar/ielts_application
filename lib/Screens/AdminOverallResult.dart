@@ -19,7 +19,7 @@ class _AdminOverallResultState extends State<AdminOverallResult> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("Results : ${widget.correctOption}/${widget.total}", style: TextStyle(fontSize: 25),),
+                Text("Overall Results : ${widget.correctOption}", style: TextStyle(fontSize: 25),),
                 SizedBox(
                   height: 25,
                 ),

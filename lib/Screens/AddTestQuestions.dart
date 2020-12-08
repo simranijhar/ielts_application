@@ -62,6 +62,7 @@ class _AddTestQuestionsState extends State<AddTestQuestions> {
           : Form(
               key: _formKey,
               child: Container(
+                height: 1250,
                 margin: EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
                   children: [
